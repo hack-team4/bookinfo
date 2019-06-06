@@ -14,13 +14,16 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-ratings-v2:$TAG_NAME', '--build-arg', 'service_version=v2', '.']
   dir: 'src/ratings'
+- name: 'gradle:4.8.1'
+  args: ['gradle', 'clean', 'build']
+  dir: 'src/reviews'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v1:$TAG_NAME', '--build-arg', 'service_version=v1','.']
-  dir: 'src/reviews'
+  dir: 'src/reviews/reviews-wlpcfg'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v2:$TAG_NAME', '--build-arg', 'service_version=v2','.']
-  dir: 'src/reviews'
+  dir: 'src/reviews/reviews-wlpcfg'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v3:$TAG_NAME', '--build-arg', 'service_version=v3','.']
-  dir: 'src/reviews'
+  dir: 'src/reviews/reviews-wlpcfg'
 images: ['gcr.io/$PROJECT_ID/examples-bookinfo-productpage-v1:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-details-v1:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-details-v1:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-ratings-v1:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-ratings-v2:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v1:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v2:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v3:$TAG_NAME']
