@@ -6,10 +6,10 @@ steps:
   args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v1:$TAG_NAME', '--build-arg', 'service_version=v1','.']
   dir: 'src/reviews/reviews-wlpcfg'
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v2:$TAG_NAME', '--build-arg', 'service_version=v2','.']
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v2:$TAG_NAME', '--build-arg', 'service_version=v2', '--build-arg', 'enable_ratings=true', '.']
   dir: 'src/reviews/reviews-wlpcfg'
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v3:$TAG_NAME', '--build-arg', 'service_version=v3','.']
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v3:$TAG_NAME', '--build-arg', 'service_version=v3', '--build-arg', 'enable_ratings=true', '--build-arg', 'star_color=red', '.']
   dir: 'src/reviews/reviews-wlpcfg'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-productpage-v1:$TAG_NAME', '.']
@@ -26,4 +26,6 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-ratings-v2:$TAG_NAME', '--build-arg', 'service_version=v2', '.']
   dir: 'src/ratings'
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', '-r', 'platform/kube/bookinfo.yaml', 'gs://$PROJECT_ID-kubernetes-manifests']
 images: ['gcr.io/$PROJECT_ID/examples-bookinfo-productpage-v1:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-details-v1:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-details-v1:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-ratings-v1:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-ratings-v2:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v1:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v2:$TAG_NAME', 'gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v3:$TAG_NAME']
