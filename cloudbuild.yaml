@@ -1,6 +1,6 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['run', '--rm', '-u', 'root', '-v', '"$(pwd)":/home/gradle/project', '-w', '/home/gradle/project', 'gradle:4.8.1', 'gradle', 'clean', 'build']
+- name: 'gradle:4.8.1'
+  args: ['-w', '/workspace/src/reviews', 'gradle', 'clean', 'build']
   dir: 'src/reviews'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/examples-bookinfo-reviews-v1:$TAG_NAME', '--build-arg', 'service_version=v1','.']
